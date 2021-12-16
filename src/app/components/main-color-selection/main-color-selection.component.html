@@ -1,0 +1,16 @@
+<div class="color-palette">
+    <input type="number" [(value)]="num_colors" />
+
+    <br><br> Color Palette:<br>
+    <div *ngFor="let index of list" class="color-selection">
+        <input [(colorPicker)]="color_list[index]" [style.background]="color_list[index]" class="color-selection-picker" (colorPickerChange)="colorPickerChanged()"/>
+        <br>
+        <input type="text" [value]="color_list[index]" (blur)="colorChanged($event)" class="color-selection-text" [attr.data-index]="index">
+    </div>
+    
+    <div class="background-selection" >
+        <input [(colorPicker)]="background" [style.background]="background" class="background-selection-picker" (colorPickerChange)="colorPickerChanged()"/>
+        <br>
+        <input type="text" [value]="background" (change)="colorChanged($event)" class="background-selection-text" data-index="background">
+    </div>
+</div>

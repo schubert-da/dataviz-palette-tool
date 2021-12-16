@@ -1,0 +1,32 @@
+.color-palette{
+
+    .color-selection{
+        display: inline-block;
+        margin-right: 4px;
+
+        .color-selection-picker{
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2px;
+        }
+    
+        .color-selection-text{
+            width: 60px;
+        }
+    }
+
+    .background-selection{
+        display: inline-block;
+        margin-left: 15px;
+
+        .background-selection-picker{
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2px;
+        }
+    
+        .background-selection-text{
+            width: 60px;
+        }
+    }
+}
