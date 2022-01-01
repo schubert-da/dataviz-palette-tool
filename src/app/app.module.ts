@@ -9,13 +9,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TestComponentComponent } from './components/test-component/test-component.component';
 import { ColourServiceService } from './services/colour-service.service';
 import { VizContainerComponent } from './components/viz-container/viz-container.component';
+import { BarChartComponent } from './components/graphs/bar-chart/bar-chart.component';
+import { LineChartComponent } from './components/graphs/line-chart/line-chart.component';
+import { SvgTestComponent } from './tmp/svg-test/svg-test.component';
+import { TreemapComponent } from './components/graphs/treemap/treemap.component';
+import { ScatterPlotComponent } from './components/graphs/scatter-plot/scatter-plot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainColorSelectionComponent,
     TestComponentComponent,
-    VizContainerComponent
+    VizContainerComponent,
+    BarChartComponent,
+    LineChartComponent,
+    SvgTestComponent,
+    TreemapComponent,
+    ScatterPlotComponent
   ],
   imports: [
     BrowserModule,

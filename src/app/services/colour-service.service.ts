@@ -8,13 +8,17 @@ export class ColourServiceService {
 
   constructor() { }
 
-  private palette = new Subject<string[]>();
+  
+   palette = new Subject<string[]>();
+  private background = new Subject<string>();
 
   // Observable string streams
   paletteChanged$ = this.palette.asObservable();
+  backgroundChanged$ = this.background.asObservable();
 
   // Service message commands
   changePalette(palette: string[]) {
-    this.palette.next(palette);
+    this.palette.next(palette.slice(0, palette.length - 1));
+    this.background.next(palette.slice(-1)[0]);
   }
 }

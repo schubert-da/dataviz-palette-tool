@@ -10,31 +10,40 @@ import * as d3 from 'd3';
 })
 export class TestComponentComponent implements OnInit {
 
-  subscription: Subscription;
-  colors: string[] = [];
+  palette_subscription: Subscription;
+  background_subscription: Subscription;
+  colors: string[]=[];
   background: string = "#fff";
 
   constructor(private colorservice: ColourServiceService) {
   }
 
   ngOnInit(): void {
-    this.subscription = this.colorservice.paletteChanged$.subscribe(
+    this.palette_subscription = this.colorservice.paletteChanged$.subscribe(
       data => {
         this.colors = data;
         console.log(this.colors)
-        this.background = data.slice(-1)[0];
-        console.log(this.background);
 
-        this.createColors();
-        this.drawChart();
+        // this.createColors();
+        // this.drawChart();
       });
 
-    this.createSvg();
-    this.createColors();
-    this.drawChart();
+    this.background_subscription = this.colorservice.backgroundChanged$.subscribe(
+      data => {
+        this.background = data;
+        console.log(this.background)
+
+        // this.createColors();
+        // this.drawChart();
+      });
+
+    // this.createSvg();
+    // this.createColors();
+    // this.drawChart();
 
   }
 
+  /*
   private data = [
     { "Framework": "Vue", "Stars": "166443", "Released": "2014" },
     { "Framework": "React", "Stars": "150793", "Released": "2013" },
@@ -101,4 +110,5 @@ export class TestComponentComponent implements OnInit {
       .style("text-anchor", "middle")
       .style("font-size", 15);
   }
+*/
 }

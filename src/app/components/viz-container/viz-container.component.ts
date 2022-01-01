@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ColourServiceService } from 'src/app/services/colour-service.service';
 
 @Component({
   selector: 'app-viz-container',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./viz-container.component.scss']
 })
 export class VizContainerComponent implements OnInit {
+  background: string;
+  background_subscription: Subscription;
 
-  constructor() { }
+  constructor( private colorservice: ColourServiceService ) { }
 
   ngOnInit(): void {
+    this.background_subscription = this.colorservice.backgroundChanged$.subscribe(
+      data => {
+        this.background = data;
+      });
   }
 
 }

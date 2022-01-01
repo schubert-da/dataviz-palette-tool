@@ -1,5 +1,5 @@
 <div class="color-palette">
-    <input type="number" [(value)]="num_colors" />
+    <input type="number" [(value)]="num_colors" (change)="numColorsChange($event)"/>
 
     <br><br> Color Palette:<br>
     <div *ngFor="let index of list" class="color-selection">

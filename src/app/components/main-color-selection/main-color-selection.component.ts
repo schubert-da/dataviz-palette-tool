@@ -16,21 +16,31 @@ export class MainColorSelectionComponent implements OnInit {
   color_list: string[] = [];
   background: string = "#ffffff";
 
+  default_palette: string[] = ["#4F091D", "#DD4A48", "#F5EEDC", "#97BFB4"]
+
   constructor( private colourservice: ColourServiceService) { 
     
 
   }
 
   ngOnInit(): void {
-    this.createColorList();
-  }
-
-  createColorList(){
-    this.color_list = [" "," "," "," "," "] 
+    this.list = Array.from({ length: this.num_colors }, (_, i) => i)
+    this.color_list = Array.from({ length: this.num_colors }, (_, i) => this.default_palette[i % 4])
+    console.log(this.list);
   }
 
   colorPickerChanged(){
     this.colourservice.changePalette([...this.color_list, this.background]);
+  }
+
+  numColorsChange(event){
+    this.list = Array.from({ length: event.target.value }, (_, i) => i).slice()
+
+    this.color_list = Array.from({ length: event.target.value }, (_, i) => this.color_list[i]);
+    this.color_list = this.color_list.map(color => color === undefined ? "#ffffff" : color);
+
+    this.colourservice.changePalette([...this.color_list, this.background]);
+    console.log(this.color_list)
   }
 
   colorChanged(event){
