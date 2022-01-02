@@ -14,6 +14,8 @@ import { LineChartComponent } from './components/graphs/line-chart/line-chart.co
 import { SvgTestComponent } from './tmp/svg-test/svg-test.component';
 import { TreemapComponent } from './components/graphs/treemap/treemap.component';
 import { ScatterPlotComponent } from './components/graphs/scatter-plot/scatter-plot.component';
+import { PieChartComponent } from './components/graphs/pie-chart/pie-chart.component';
+import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choropleth-map.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ScatterPlotComponent } from './components/graphs/scatter-plot/scatter-p
     LineChartComponent,
     SvgTestComponent,
     TreemapComponent,
-    ScatterPlotComponent
+    ScatterPlotComponent,
+    PieChartComponent,
+    ChoroplethMapComponent
   ],
   imports: [
     BrowserModule,

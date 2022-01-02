@@ -22,7 +22,6 @@ export class TestComponentComponent implements OnInit {
     this.palette_subscription = this.colorservice.paletteChanged$.subscribe(
       data => {
         this.colors = data;
-        console.log(this.colors)
 
         // this.createColors();
         // this.drawChart();
@@ -31,7 +30,6 @@ export class TestComponentComponent implements OnInit {
     this.background_subscription = this.colorservice.backgroundChanged$.subscribe(
       data => {
         this.background = data;
-        console.log(this.background)
 
         // this.createColors();
         // this.drawChart();

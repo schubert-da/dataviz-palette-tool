@@ -25,8 +25,7 @@ export class MainColorSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.list = Array.from({ length: this.num_colors }, (_, i) => i)
-    this.color_list = Array.from({ length: this.num_colors }, (_, i) => this.default_palette[i % 4])
-    console.log(this.list);
+    this.color_list = Array.from({ length: this.num_colors }, (_, i) => this.default_palette[i % 4]);
   }
 
   colorPickerChanged(){
@@ -40,7 +39,6 @@ export class MainColorSelectionComponent implements OnInit {
     this.color_list = this.color_list.map(color => color === undefined ? "#ffffff" : color);
 
     this.colourservice.changePalette([...this.color_list, this.background]);
-    console.log(this.color_list)
   }
 
   colorChanged(event){

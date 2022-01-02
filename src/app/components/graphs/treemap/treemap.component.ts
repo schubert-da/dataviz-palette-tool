@@ -65,7 +65,7 @@ export class TreemapComponent implements OnInit {
   private drawChart(): void {
     var chart = this;
     const root = d3.stratify()
-    .id(function(d) {  console.log(d["name"]); return d["name"]; })   // Name of the entity (column name is name in csv)
+    .id(function(d) { return d["name"]; })   // Name of the entity (column name is name in csv)
     .parentId(function(d) { return d["parent"]; })   // Name of the parent (column name is parent in csv)
     (this.data);
 

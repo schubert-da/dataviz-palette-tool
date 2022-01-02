@@ -2,9 +2,13 @@
 <!-- <br>
 <app-viz-container></app-viz-container> -->
 <br>
-<app-bar-chart [colors]="default_palette" class="viz-container"></app-bar-chart>
-<app-line-chart [colors]="default_palette" class="viz-container"></app-line-chart>
-<app-treemap [colors]="default_palette" class="viz-container"></app-treemap>
-<app-scatter-plot [colors]="default_palette" class="viz-container"></app-scatter-plot>
+<main>
+    <app-bar-chart [colors]="default_palette" class="viz-container"></app-bar-chart>
+    <app-line-chart [colors]="default_palette" class="viz-container"></app-line-chart>
+    <app-treemap [colors]="default_palette" class="viz-container"></app-treemap>
+    <app-scatter-plot [colors]="default_palette" class="viz-container"></app-scatter-plot>
+    <app-pie-chart [colors]="default_palette" class="viz-container"></app-pie-chart>
+    <app-choropleth-map [colors]="default_palette" class="viz-container"></app-choropleth-map>
+</main>
 <!-- <app-svg-test [colors]="default_palette" class="viz-container"></app-svg-test> -->
 <!-- <app-test-component></app-test-component> -->

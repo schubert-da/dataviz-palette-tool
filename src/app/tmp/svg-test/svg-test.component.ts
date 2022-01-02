@@ -18,7 +18,6 @@ export class SvgTestComponent implements OnInit {
     this.palette_subscription = this.colorservice.paletteChanged$.subscribe(
       data => {
         this.colors = data;
-        console.log(this.colors);
         // this.updateColors();
       });
 
