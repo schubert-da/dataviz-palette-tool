@@ -71,7 +71,7 @@ export class PieChartComponent implements OnInit {
   
   // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
   this.svg
-    .selectAll('pie_slice')
+    .selectAll('pie-slice')
     .data(data_ready)
     .join('path')
     .attr('d', d3.arc()
@@ -80,12 +80,12 @@ export class PieChartComponent implements OnInit {
     )
     .attr('fill', function(d){ return(color(d.data[1])) })
     .attr("stroke", "black")
-    .attr("class", "pie_slice")
+    .attr("class", "pie-slice")
     .style("stroke-width", "0.5")
     }
 
   private updateColors(): void{
-    this.svg.selectAll(".pie_slice")
+    this.svg.selectAll(".pie-slice")
       .attr("fill", (d,i) => { return this.colors[i % this.colors.length]; })
   }
 }

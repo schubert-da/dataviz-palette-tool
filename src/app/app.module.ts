@@ -16,6 +16,7 @@ import { TreemapComponent } from './components/graphs/treemap/treemap.component'
 import { ScatterPlotComponent } from './components/graphs/scatter-plot/scatter-plot.component';
 import { PieChartComponent } from './components/graphs/pie-chart/pie-chart.component';
 import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choropleth-map.component';
+import { StackedAreaChartComponent } from './components/graphs/stacked-area-chart/stacked-area-chart.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choro
     TreemapComponent,
     ScatterPlotComponent,
     PieChartComponent,
-    ChoroplethMapComponent
+    ChoroplethMapComponent,
+    StackedAreaChartComponent
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,6 @@ export class LineChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.createSvg();
     this.drawChart();
     this.updateColors()
