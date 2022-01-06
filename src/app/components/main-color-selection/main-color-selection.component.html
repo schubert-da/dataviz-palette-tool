@@ -9,7 +9,7 @@
         <span *ngIf="i==0" class="color-selection-label">Color Palette<br></span>
         <input [(colorPicker)]="color_list[index]" [style.background]="color_list[index]" class="color-selection-picker" (colorPickerChange)="colorPickerChanged()"/>
         <br>
-        <input type="text" [value]="color_list[index]" (blur)="colorChanged($event)" class="color-selection-text" [attr.data-index]="index">
+        <input type="text" [value]="color_list[index]" (change)="colorChanged($event)" class="color-selection-text" [attr.data-index]="index">
     </div>
     
     <div class="background-selection" >

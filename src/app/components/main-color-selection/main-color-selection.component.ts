@@ -45,6 +45,8 @@ export class MainColorSelectionComponent implements OnInit {
     let color:string = event.target.value;
     let index = event.target.dataset.index;
 
+    console.log("color "+index+" changed to "+color);
+
     if( index == "background" ){
       this.background = color;
     }
