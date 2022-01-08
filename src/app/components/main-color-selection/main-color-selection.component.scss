@@ -5,46 +5,56 @@
     padding: 5px 5px 10px 10px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
+    .selection{
+        display: flex;
+        gap: 0.2em;
+        align-items: flex-start;
+        
+        width: 60%;
+        min-width: 500px;
+    }
+
     input[type = "number"]{
+        width: 95%;
         margin-top: 2px;
         border: 1px solid #eeeeee;
         outline: none;
     }
 
     .num-colors-selection{
-        display: inline-block;
-        vertical-align: top;
-        width: 12%;
-        margin-right: 5px;
+        flex: 1;
+        max-width: 125px;
+        margin-right: 10px;
     }
 
     .color-selection{
-        display: inline-block;
-        margin-right: 4px;
+        flex: 1;
+        max-width: 100px;
 
         .color-selection-picker{
-            width: 80px;
-            height: 80px;
+            height: 10vh;
+            max-width: 92%;
             margin-bottom: 2px;
         }
     
         .color-selection-text{
-            width: 80px;
+            max-width: 92%;
         }
     }
 
     .background-selection{
-        display: inline-block;
+        flex: 1;
+        max-width: 100px;
         margin-left: 15px;
 
         .background-selection-picker{
-            width: 80px;
-            height: 80px;
+            height: 10vh;
+            max-width: 92%;
             margin-bottom: 2px;
         }
     
         .background-selection-text{
-            width: 80px;
+            max-width: 92%;
         }
     }
 
