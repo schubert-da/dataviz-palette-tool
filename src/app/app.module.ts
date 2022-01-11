@@ -16,6 +16,7 @@ import { ScatterPlotComponent } from './components/graphs/scatter-plot/scatter-p
 import { PieChartComponent } from './components/graphs/pie-chart/pie-chart.component';
 import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choropleth-map.component';
 import { StackedAreaChartComponent } from './components/graphs/stacked-area-chart/stacked-area-chart.component';
+import { TintsShadesComponent } from './components/graphs/tints-shades/tints-shades.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StackedAreaChartComponent } from './components/graphs/stacked-area-char
     ScatterPlotComponent,
     PieChartComponent,
     ChoroplethMapComponent,
-    StackedAreaChartComponent
+    StackedAreaChartComponent,
+    TintsShadesComponent
   ],
   imports: [
     BrowserModule,
