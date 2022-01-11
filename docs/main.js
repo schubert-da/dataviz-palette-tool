@@ -132,6 +132,123 @@ TreemapComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
 
 /***/ }),
 
+/***/ "7iX/":
+/*!**************************************************************************!*\
+  !*** ./src/app/components/graphs/tints-shades/tints-shades.component.ts ***!
+  \**************************************************************************/
+/*! exports provided: TintsShadesComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TintsShadesComponent", function() { return TintsShadesComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! d3 */ "iYt/");
+/* harmony import */ var src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/colour-service.service */ "FQbm");
+
+
+
+
+class TintsShadesComponent {
+    constructor(colorservice) {
+        this.colorservice = colorservice;
+        this.background = "#fff";
+        this.data = [];
+        this.margin = 20;
+        this.width = 200;
+        this.height = 200;
+        this.palette_subscription = this.colorservice.paletteChanged$.subscribe(data => {
+            this.colors = data;
+            this.updateColors();
+        });
+        this.background_subscription = this.colorservice.backgroundChanged$.subscribe(data => {
+            this.background = data;
+        });
+    }
+    ngOnInit() {
+        this.createSvg();
+        this.drawChart();
+        this.updateColors();
+    }
+    createSvg() {
+        // This is simply multiple area charts on top of one another
+        // and not how you would create an actual stacked area chart.
+        this.svg = d3__WEBPACK_IMPORTED_MODULE_1__["select"]("figure#shades")
+            .append("svg")
+            .attr("width", '100%')
+            .attr("height", '100%')
+            .attr('viewBox', '0 0 ' + Math.min(this.width, this.height) + ' ' + Math.min(this.width, this.height))
+            .attr('preserveAspectRatio', 'xMinYMin');
+    }
+    drawChart() {
+        var chart = this;
+        const x_vals = [0, 1, 2, 3, 4, 5, 6];
+        const y_vals = [0, 1, 2, 3, 4, 5, 6];
+        for (let x_val of x_vals) {
+            for (let y_val of y_vals) {
+                this.data.push({ "x": x_val, "y": y_val, "data": 1 });
+            }
+        }
+        // Build X scales and axis:
+        const x = d3__WEBPACK_IMPORTED_MODULE_1__["scaleBand"]()
+            .range([0, chart.width])
+            .domain(x_vals.map(d => "" + d))
+            .padding(0.03);
+        this.svg.append("g")
+            .attr("transform", `translate(0, ${chart.height})`)
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__["axisBottom"](x));
+        // Build X scales and axis:
+        const y = d3__WEBPACK_IMPORTED_MODULE_1__["scaleBand"]()
+            .range([chart.height, 0])
+            .domain(y_vals.map(d => "" + d))
+            .padding(0.1);
+        this.svg.append("g")
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__["axisLeft"](y));
+        this.svg.selectAll()
+            .data(this.data, function (d) { return d.x + '-' + d.y; })
+            .join("rect")
+            .attr("class", "shade-tile")
+            .attr("data-row-index", d => d.y)
+            .attr("x", function (d) { return x("" + d.x); })
+            .attr("y", function (d) { return y("" + d.y); })
+            .attr("width", x.bandwidth())
+            .attr("height", y.bandwidth())
+            .style("fill", function (d) { return "red"; });
+    }
+    updateColors() {
+        this.svg.selectAll(".shade-tile")
+            .style("fill", (d, i) => {
+            let color = d3__WEBPACK_IMPORTED_MODULE_1__["hsl"](this.colors[d.y % this.colors.length]);
+            let new_color = d3__WEBPACK_IMPORTED_MODULE_1__["hsl"](color.h, color.s, color.l - 0.1 * (3 - d.x));
+            return new_color;
+        });
+    }
+}
+TintsShadesComponent.ɵfac = function TintsShadesComponent_Factory(t) { return new (t || TintsShadesComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__["ColourServiceService"])); };
+TintsShadesComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: TintsShadesComponent, selectors: [["app-tints-shades"]], inputs: { colors: "colors" }, decls: 4, vars: 2, consts: [[1, "viz"], [1, "viz-header"], ["id", "shades"]], template: function TintsShadesComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Tints and Shades ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "figure", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("background", ctx.background);
+    } }, styles: ["#shades[_ngcontent-%COMP%] {\n  margin: 5% 5% 0% 5%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9ncmFwaHMvdGludHMtc2hhZGVzL3RpbnRzLXNoYWRlcy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFBO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2dyYXBocy90aW50cy1zaGFkZXMvdGludHMtc2hhZGVzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3NoYWRlcyB7XHJcbiAgICBtYXJnaW46IDUlIDUlIDAlIDUlO1xyXG59Il19 */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TintsShadesComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-tints-shades',
+                templateUrl: './tints-shades.component.html',
+                styleUrls: ['./tints-shades.component.scss']
+            }]
+    }], function () { return [{ type: src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__["ColourServiceService"] }]; }, { colors: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }] }); })();
+
+
+/***/ }),
+
 /***/ "AytR":
 /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
@@ -219,6 +336,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/graphs/scatter-plot/scatter-plot.component */ "ynmJ");
 /* harmony import */ var _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/graphs/pie-chart/pie-chart.component */ "uNZM");
 /* harmony import */ var _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/graphs/choropleth-map/choropleth-map.component */ "Y3VV");
+/* harmony import */ var _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/graphs/stacked-area-chart/stacked-area-chart.component */ "YnzT");
+/* harmony import */ var _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/graphs/tints-shades/tints-shades.component */ "7iX/");
+
+
 
 
 
@@ -235,7 +356,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 6, consts: [[1, "viz-container", 3, "colors"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 11, vars: 8, consts: [[1, "viz-container", 3, "colors"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-main-color-selection");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "br");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "main");
@@ -245,6 +366,8 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](6, "app-scatter-plot", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "app-pie-chart", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](8, "app-choropleth-map", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](9, "app-stacked-area-chart", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](10, "app-tints-shades", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
@@ -259,7 +382,11 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
-    } }, directives: [_components_main_color_selection_main_color_selection_component__WEBPACK_IMPORTED_MODULE_1__["MainColorSelectionComponent"], _components_graphs_bar_chart_bar_chart_component__WEBPACK_IMPORTED_MODULE_2__["BarChartComponent"], _components_graphs_line_chart_line_chart_component__WEBPACK_IMPORTED_MODULE_3__["LineChartComponent"], _components_graphs_treemap_treemap_component__WEBPACK_IMPORTED_MODULE_4__["TreemapComponent"], _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_5__["ScatterPlotComponent"], _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_6__["PieChartComponent"], _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__["ChoroplethMapComponent"]], styles: ["main[_ngcontent-%COMP%] {\n  padding: 10px;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-gap: 1em;\n  margin-top: 9%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtFQUVBLGFBQUE7RUFDQSw0REFBQTtFQUNBLGFBQUE7RUFFQSxjQUFBO0FBREoiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJtYWlue1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuXHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgZ3JpZC1nYXA6IDFlbTtcclxuXHJcbiAgICBtYXJnaW4tdG9wOiA5JTtcclxufSJdfQ== */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
+    } }, directives: [_components_main_color_selection_main_color_selection_component__WEBPACK_IMPORTED_MODULE_1__["MainColorSelectionComponent"], _components_graphs_bar_chart_bar_chart_component__WEBPACK_IMPORTED_MODULE_2__["BarChartComponent"], _components_graphs_line_chart_line_chart_component__WEBPACK_IMPORTED_MODULE_3__["LineChartComponent"], _components_graphs_treemap_treemap_component__WEBPACK_IMPORTED_MODULE_4__["TreemapComponent"], _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_5__["ScatterPlotComponent"], _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_6__["PieChartComponent"], _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__["ChoroplethMapComponent"], _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_8__["StackedAreaChartComponent"], _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_9__["TintsShadesComponent"]], styles: ["main[_ngcontent-%COMP%] {\n  padding: 10px;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-gap: 1em;\n  margin-top: 9%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtFQUVBLGFBQUE7RUFDQSw0REFBQTtFQUNBLGFBQUE7RUFFQSxjQUFBO0FBREoiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJtYWlue1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuXHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgZ3JpZC1nYXA6IDFlbTtcclxuXHJcbiAgICBtYXJnaW4tdG9wOiA5JTtcclxufSJdfQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -408,48 +535,48 @@ class StackedAreaChartComponent {
         this.colorservice = colorservice;
         this.background = "#fff";
         this.data = [
-            { "name": "A", "year": "2012", "Value": "25" },
-            { "name": "A", "year": "2013", "Value": "40" },
-            { "name": "A", "year": "2014", "Value": "35" },
-            { "name": "A", "year": "2015", "Value": "30" },
-            { "name": "A", "year": "2016", "Value": "20" },
-            { "name": "A", "year": "2017", "Value": "20" },
-            { "name": "A", "year": "2018", "Value": "15" },
-            { "name": "B", "year": "2012", "Value": "15" },
-            { "name": "B", "year": "2013", "Value": "30" },
+            { "name": "A", "year": "2012", "Value": "16" },
+            { "name": "A", "year": "2013", "Value": "17" },
+            { "name": "A", "year": "2014", "Value": "18" },
+            { "name": "A", "year": "2015", "Value": "23" },
+            { "name": "A", "year": "2016", "Value": "24" },
+            { "name": "A", "year": "2017", "Value": "26" },
+            { "name": "A", "year": "2018", "Value": "30" },
+            { "name": "B", "year": "2012", "Value": "11" },
+            { "name": "B", "year": "2013", "Value": "14" },
             { "name": "B", "year": "2014", "Value": "14" },
             { "name": "B", "year": "2015", "Value": "15" },
             { "name": "B", "year": "2016", "Value": "20" },
-            { "name": "B", "year": "2017", "Value": "30" },
-            { "name": "B", "year": "2018", "Value": "32" },
-            { "name": "C", "year": "2012", "Value": "15" },
-            { "name": "C", "year": "2013", "Value": "20" },
-            { "name": "C", "year": "2014", "Value": "18" },
-            { "name": "C", "year": "2015", "Value": "15" },
-            { "name": "C", "year": "2016", "Value": "12" },
+            { "name": "B", "year": "2017", "Value": "21" },
+            { "name": "B", "year": "2018", "Value": "24" },
+            { "name": "C", "year": "2012", "Value": "9" },
+            { "name": "C", "year": "2013", "Value": "10" },
+            { "name": "C", "year": "2014", "Value": "11" },
+            { "name": "C", "year": "2015", "Value": "12" },
+            { "name": "C", "year": "2016", "Value": "14" },
             { "name": "C", "year": "2017", "Value": "18" },
             { "name": "C", "year": "2018", "Value": "19" },
             { "name": "D", "year": "2012", "Value": "5" },
             { "name": "D", "year": "2013", "Value": "6" },
-            { "name": "D", "year": "2014", "Value": "8" },
-            { "name": "D", "year": "2015", "Value": "8" },
-            { "name": "D", "year": "2016", "Value": "12" },
+            { "name": "D", "year": "2014", "Value": "6" },
+            { "name": "D", "year": "2015", "Value": "7" },
+            { "name": "D", "year": "2016", "Value": "10" },
             { "name": "D", "year": "2017", "Value": "12" },
-            { "name": "D", "year": "2018", "Value": "17" },
-            { "name": "E", "year": "2012", "Value": "48" },
-            { "name": "E", "year": "2013", "Value": "36" },
-            { "name": "E", "year": "2014", "Value": "38" },
-            { "name": "E", "year": "2015", "Value": "38" },
-            { "name": "E", "year": "2016", "Value": "32" },
-            { "name": "E", "year": "2017", "Value": "28" },
-            { "name": "E", "year": "2018", "Value": "22" },
+            { "name": "D", "year": "2018", "Value": "15" },
+            { "name": "E", "year": "2012", "Value": "2" },
+            { "name": "E", "year": "2013", "Value": "3" },
+            { "name": "E", "year": "2014", "Value": "4" },
+            { "name": "E", "year": "2015", "Value": "5" },
+            { "name": "E", "year": "2016", "Value": "5" },
+            { "name": "E", "year": "2017", "Value": "8" },
+            { "name": "E", "year": "2018", "Value": "10" },
         ];
         this.margin = 20;
         this.width = 200;
         this.height = 200;
         this.palette_subscription = this.colorservice.paletteChanged$.subscribe(data => {
             this.colors = data;
-            this.upyearColors();
+            this.updateColors();
         });
         this.background_subscription = this.colorservice.backgroundChanged$.subscribe(data => {
             this.background = data;
@@ -458,9 +585,11 @@ class StackedAreaChartComponent {
     ngOnInit() {
         this.createSvg();
         this.drawChart();
-        this.upyearColors();
+        this.updateColors();
     }
     createSvg() {
+        // This is simply multiple area charts on top of one another
+        // and not how you would create an actual stacked area chart.
         this.svg = d3__WEBPACK_IMPORTED_MODULE_1__["select"]("figure#stacked-area")
             .append("svg")
             .attr("width", '100%')
@@ -470,74 +599,49 @@ class StackedAreaChartComponent {
     }
     drawChart() {
         var chart = this;
-        /*
-        var sumstat = d3.group(this.data, d => d.year);
-        var sumstat2 = [...sumstat].map(([name, value]) => ({ name, value }))
-        // console.log(sumstat2)
-      // Stack the data: each group will be represented on top of each other
-      const mygroups = ["A","B","C","D","E"] // list of group names
-      const mygroup = ["0","1","2","3","4"] // list of group names
-      // const years = ["2012", "2013", "2014", "2015", "2016", "2017", "2018"]
-    
-      const stackedData : any = d3.stack()
-        .keys(mygroup)
-        .value(function(d, key){
-          // console.log(key)
-          // console.log(d);
-          // console.log(key);
-          return d[1][key].Value;
-        })
-        (sumstat2)
-    
-      // Add X axis --> it is a year format
-      const x = d3.scaleLinear()
-        .domain(d3.extent(this.data, function(d) { return +d.year; }))
-    
-        .range([ 0, chart.width ]);
-      this.svg.append("g")
-        .attr("transform", `translate(0, ${chart.height})`)
-        .call(d3.axisBottom(x).ticks(5));
-    
-      console.log("max " + d3.max(this.data, function(d) { return +d.Value; }))
-      // Add Y axis
-      const y = d3.scaleLinear()
-        .domain([0, 135])
-        .range([ chart.height, 0 ]);
-      this.svg.append("g")
-        .call(d3.axisLeft(y));
-    
-      // console.log(Array.from(stackedData))
-        
-      // Show the areas
-      this.svg
-        .selectAll(".stacked-path")
-        .data(Array.from(stackedData))
-        .join("path")
-          .attr("class","stacked-path")
-          .style("fill", (d,i) => { return this.colors[i % this.colors.length]; })
-          .attr("d", d3.area()
-            .x(function(d, i) { return x(+d["data"][0]); })
-            .y0(function(d) { console.log(+d[1]); return y(+d[0]); })
-            .y1(function(d) { return y(+d[1]); })
-        )
-        */
+        const x = d3__WEBPACK_IMPORTED_MODULE_1__["scaleTime"]()
+            .domain(d3__WEBPACK_IMPORTED_MODULE_1__["extent"](this.data, d => +d.year))
+            .range([0, chart.width]);
+        this.svg.append("g")
+            .attr("transform", `translate(0,${chart.height})`)
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__["axisBottom"](x));
+        // Add Y axis
+        const y = d3__WEBPACK_IMPORTED_MODULE_1__["scaleLinear"]()
+            .domain([0, d3__WEBPACK_IMPORTED_MODULE_1__["max"](this.data, d => +d.Value)])
+            .range([chart.height, 0]);
+        this.svg.append("g")
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__["axisLeft"](y));
+        for (let name of this.data.map(d => d.name)) {
+            let currentData = this.data.filter(d => d.name == name);
+            // Add the area
+            this.svg.append("path")
+                .datum(currentData)
+                .attr("fill", "#cce5df")
+                .attr("class", "stacked-path")
+                .attr("stroke", "#eee")
+                .attr("stroke-width", 1.1)
+                .attr("d", d3__WEBPACK_IMPORTED_MODULE_1__["area"]()
+                .x(d => x(+d["year"]) + 1)
+                .y0(y(0) - 1)
+                .y1(d => y(+d["Value"])));
+        }
     }
-    upyearColors() {
+    updateColors() {
         this.svg.selectAll(".stacked-path")
-            .attr("stroke", (d, i) => { return this.colors[i % this.colors.length]; });
+            .attr("fill", (d, i) => { return this.colors[i % this.colors.length]; });
     }
 }
 StackedAreaChartComponent.ɵfac = function StackedAreaChartComponent_Factory(t) { return new (t || StackedAreaChartComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__["ColourServiceService"])); };
 StackedAreaChartComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: StackedAreaChartComponent, selectors: [["app-stacked-area-chart"]], inputs: { colors: "colors" }, decls: 4, vars: 2, consts: [[1, "viz"], [1, "viz-header"], ["id", "stacked-area"]], template: function StackedAreaChartComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Line chart ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Stacked Area Chart ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "figure", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("background", ctx.background);
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZ3JhcGhzL3N0YWNrZWQtYXJlYS1jaGFydC9zdGFja2VkLWFyZWEtY2hhcnQuY29tcG9uZW50LnNjc3MifQ== */"] });
+    } }, styles: ["#stacked-area[_ngcontent-%COMP%] {\n  margin: 5% 5% 0% 5%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9ncmFwaHMvc3RhY2tlZC1hcmVhLWNoYXJ0L3N0YWNrZWQtYXJlYS1jaGFydC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG1CQUFBO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2dyYXBocy9zdGFja2VkLWFyZWEtY2hhcnQvc3RhY2tlZC1hcmVhLWNoYXJ0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3N0YWNrZWQtYXJlYSB7XHJcbiAgICBtYXJnaW46IDUlIDUlIDAlIDUlO1xyXG59Il19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StackedAreaChartComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -579,6 +683,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/graphs/pie-chart/pie-chart.component */ "uNZM");
 /* harmony import */ var _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/graphs/choropleth-map/choropleth-map.component */ "Y3VV");
 /* harmony import */ var _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/graphs/stacked-area-chart/stacked-area-chart.component */ "YnzT");
+/* harmony import */ var _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/graphs/tints-shades/tints-shades.component */ "7iX/");
+
 
 
 
@@ -616,7 +722,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
         _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_13__["ScatterPlotComponent"],
         _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_14__["PieChartComponent"],
         _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__["ChoroplethMapComponent"],
-        _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"],
+        _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
         ngx_color_picker__WEBPACK_IMPORTED_MODULE_5__["ColorPickerModule"]] }); })();
@@ -634,7 +741,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_13__["ScatterPlotComponent"],
                     _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_14__["PieChartComponent"],
                     _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__["ChoroplethMapComponent"],
-                    _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"]
+                    _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"],
+                    _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"]
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -1194,7 +1302,7 @@ MainColorSelectionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colorPicker", ctx.background);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", ctx.background);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], ngx_color_picker__WEBPACK_IMPORTED_MODULE_3__["ColorPickerDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]], styles: [".color-palette[_ngcontent-%COMP%] {\n  position: fixed;\n  background: cadetblue;\n  width: 100%;\n  padding: 5px 5px 10px 10px;\n  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;\n  overflow-x: auto;\n}\n.color-palette[_ngcontent-%COMP%]   .selection[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 0.2em;\n  align-items: flex-start;\n  width: 60%;\n  min-width: 500px;\n}\n.color-palette[_ngcontent-%COMP%]   input[type=number][_ngcontent-%COMP%] {\n  width: 95%;\n  margin-top: 2px;\n  border: 1px solid #eeeeee;\n  outline: none;\n}\n.color-palette[_ngcontent-%COMP%]   .num-colors-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 125px;\n  margin-right: 10px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 100px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%]   .color-selection-picker[_ngcontent-%COMP%] {\n  height: 10vh;\n  max-width: 92%;\n  margin-bottom: 2px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%]   .color-selection-text[_ngcontent-%COMP%] {\n  max-width: 92%;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 100px;\n  margin-left: 15px;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%]   .background-selection-picker[_ngcontent-%COMP%] {\n  height: 10vh;\n  max-width: 92%;\n  margin-bottom: 2px;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%]   .background-selection-text[_ngcontent-%COMP%] {\n  max-width: 92%;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection-label[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .color-selection-label[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .selection-label[_ngcontent-%COMP%] {\n  font-family: Helvetica;\n  color: #efefef;\n  font-size: 1em;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection-picker[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .background-selection-picker[_ngcontent-%COMP%] {\n  border: 1px solid #eeeeee;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9tYWluLWNvbG9yLXNlbGVjdGlvbi9tYWluLWNvbG9yLXNlbGVjdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7RUFDQSxxQkFBQTtFQUNBLFdBQUE7RUFDQSwwQkFBQTtFQUNBLHlGQUFBO0VBRUEsZ0JBQUE7QUFBSjtBQUVJO0VBQ0ksYUFBQTtFQUNBLFVBQUE7RUFDQSx1QkFBQTtFQUNBLFVBQUE7RUFDQSxnQkFBQTtBQUFSO0FBR0k7RUFDSSxVQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsYUFBQTtBQURSO0FBSUk7RUFDSSxPQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtBQUZSO0FBS0k7RUFDSSxPQUFBO0VBQ0EsZ0JBQUE7QUFIUjtBQUtRO0VBQ0ksWUFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtBQUhaO0FBTVE7RUFDSSxjQUFBO0FBSlo7QUFRSTtFQUNJLE9BQUE7RUFDQSxnQkFBQTtFQUNBLGlCQUFBO0FBTlI7QUFRUTtFQUNJLFlBQUE7RUFDQSxjQUFBO0VBQ0Esa0JBQUE7QUFOWjtBQVNRO0VBQ0ksY0FBQTtBQVBaO0FBWUk7RUFDSSxzQkFBQTtFQUNBLGNBQUE7RUFDQSxjQUFBO0FBVlI7QUFhSTtFQUNJLHlCQUFBO0FBWFIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL21haW4tY29sb3Itc2VsZWN0aW9uL21haW4tY29sb3Itc2VsZWN0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbG9yLXBhbGV0dGV7XHJcbiAgICBwb3NpdGlvbjogZml4ZWQ7XHJcbiAgICBiYWNrZ3JvdW5kOiBjYWRldGJsdWU7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIHBhZGRpbmc6IDVweCA1cHggMTBweCAxMHB4O1xyXG4gICAgYm94LXNoYWRvdzogcmdiYSg2MCwgNjQsIDY3LCAwLjMpIDBweCAxcHggMnB4IDBweCwgcmdiYSg2MCwgNjQsIDY3LCAwLjE1KSAwcHggMnB4IDZweCAycHg7XHJcblxyXG4gICAgb3ZlcmZsb3cteDogYXV0bztcclxuXHJcbiAgICAuc2VsZWN0aW9ue1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgZ2FwOiAwLjJlbTtcclxuICAgICAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcclxuICAgICAgICB3aWR0aDogNjAlO1xyXG4gICAgICAgIG1pbi13aWR0aDogNTAwcHg7XHJcbiAgICB9XHJcblxyXG4gICAgaW5wdXRbdHlwZSA9IFwibnVtYmVyXCJde1xyXG4gICAgICAgIHdpZHRoOiA5NSU7XHJcbiAgICAgICAgbWFyZ2luLXRvcDogMnB4O1xyXG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkICNlZWVlZWU7XHJcbiAgICAgICAgb3V0bGluZTogbm9uZTtcclxuICAgIH1cclxuXHJcbiAgICAubnVtLWNvbG9ycy1zZWxlY3Rpb257XHJcbiAgICAgICAgZmxleDogMTtcclxuICAgICAgICBtYXgtd2lkdGg6IDEyNXB4O1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMTBweDtcclxuICAgIH1cclxuXHJcbiAgICAuY29sb3Itc2VsZWN0aW9ue1xyXG4gICAgICAgIGZsZXg6IDE7XHJcbiAgICAgICAgbWF4LXdpZHRoOiAxMDBweDtcclxuXHJcbiAgICAgICAgLmNvbG9yLXNlbGVjdGlvbi1waWNrZXJ7XHJcbiAgICAgICAgICAgIGhlaWdodDogMTB2aDtcclxuICAgICAgICAgICAgbWF4LXdpZHRoOiA5MiU7XHJcbiAgICAgICAgICAgIG1hcmdpbi1ib3R0b206IDJweDtcclxuICAgICAgICB9XHJcbiAgICBcclxuICAgICAgICAuY29sb3Itc2VsZWN0aW9uLXRleHR7XHJcbiAgICAgICAgICAgIG1heC13aWR0aDogOTIlO1xyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAuYmFja2dyb3VuZC1zZWxlY3Rpb257XHJcbiAgICAgICAgZmxleDogMTtcclxuICAgICAgICBtYXgtd2lkdGg6IDEwMHB4O1xyXG4gICAgICAgIG1hcmdpbi1sZWZ0OiAxNXB4O1xyXG5cclxuICAgICAgICAuYmFja2dyb3VuZC1zZWxlY3Rpb24tcGlja2Vye1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEwdmg7XHJcbiAgICAgICAgICAgIG1heC13aWR0aDogOTIlO1xyXG4gICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAycHg7XHJcbiAgICAgICAgfVxyXG4gICAgXHJcbiAgICAgICAgLmJhY2tncm91bmQtc2VsZWN0aW9uLXRleHR7XHJcbiAgICAgICAgICAgIG1heC13aWR0aDogOTIlO1xyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcblxyXG4gICAgLmJhY2tncm91bmQtc2VsZWN0aW9uLWxhYmVsLCAuY29sb3Itc2VsZWN0aW9uLWxhYmVsLCAuc2VsZWN0aW9uLWxhYmVse1xyXG4gICAgICAgIGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7XHJcbiAgICAgICAgY29sb3I6ICNlZmVmZWY7XHJcbiAgICAgICAgZm9udC1zaXplOiAxZW07XHJcbiAgICB9XHJcblxyXG4gICAgLmNvbG9yLXNlbGVjdGlvbi1waWNrZXIsIC5iYWNrZ3JvdW5kLXNlbGVjdGlvbi1waWNrZXJ7XHJcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2VlZWVlZTtcclxuICAgIH1cclxufSJdfQ== */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], ngx_color_picker__WEBPACK_IMPORTED_MODULE_3__["ColorPickerDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]], styles: [".color-palette[_ngcontent-%COMP%] {\n  position: fixed;\n  background: cadetblue;\n  width: 100%;\n  padding: 5px 5px 10px 10px;\n  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;\n  overflow-x: auto;\n}\n.color-palette[_ngcontent-%COMP%]   .selection[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 0.2em;\n  align-items: flex-start;\n  width: 60%;\n  min-width: 500px;\n}\n.color-palette[_ngcontent-%COMP%]   input[type=number][_ngcontent-%COMP%] {\n  width: 95%;\n  margin-top: 2px;\n  border: 1px solid #eeeeee;\n  outline: none;\n}\n.color-palette[_ngcontent-%COMP%]   .num-colors-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 125px;\n  margin-right: 10px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 100px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%]   .color-selection-picker[_ngcontent-%COMP%] {\n  height: 10vh;\n  max-width: 92%;\n  margin-bottom: 2px;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection[_ngcontent-%COMP%]   .color-selection-text[_ngcontent-%COMP%] {\n  max-width: 92%;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%] {\n  flex: 1;\n  max-width: 100px;\n  margin: 0 15px;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%]   .background-selection-picker[_ngcontent-%COMP%] {\n  height: 10vh;\n  max-width: 92%;\n  margin-bottom: 2px;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection[_ngcontent-%COMP%]   .background-selection-text[_ngcontent-%COMP%] {\n  max-width: 92%;\n}\n.color-palette[_ngcontent-%COMP%]   .background-selection-label[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .color-selection-label[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .selection-label[_ngcontent-%COMP%] {\n  font-family: Helvetica;\n  color: #efefef;\n  font-size: 1em;\n}\n.color-palette[_ngcontent-%COMP%]   .color-selection-picker[_ngcontent-%COMP%], .color-palette[_ngcontent-%COMP%]   .background-selection-picker[_ngcontent-%COMP%] {\n  border: 1px solid #eeeeee;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9tYWluLWNvbG9yLXNlbGVjdGlvbi9tYWluLWNvbG9yLXNlbGVjdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7RUFDQSxxQkFBQTtFQUNBLFdBQUE7RUFDQSwwQkFBQTtFQUNBLHlGQUFBO0VBRUEsZ0JBQUE7QUFBSjtBQUVJO0VBQ0ksYUFBQTtFQUNBLFVBQUE7RUFDQSx1QkFBQTtFQUNBLFVBQUE7RUFDQSxnQkFBQTtBQUFSO0FBR0k7RUFDSSxVQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsYUFBQTtBQURSO0FBSUk7RUFDSSxPQUFBO0VBQ0EsZ0JBQUE7RUFDQSxrQkFBQTtBQUZSO0FBS0k7RUFDSSxPQUFBO0VBQ0EsZ0JBQUE7QUFIUjtBQUtRO0VBQ0ksWUFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtBQUhaO0FBTVE7RUFDSSxjQUFBO0FBSlo7QUFRSTtFQUNJLE9BQUE7RUFDQSxnQkFBQTtFQUNBLGNBQUE7QUFOUjtBQVFRO0VBQ0ksWUFBQTtFQUNBLGNBQUE7RUFDQSxrQkFBQTtBQU5aO0FBU1E7RUFDSSxjQUFBO0FBUFo7QUFZSTtFQUNJLHNCQUFBO0VBQ0EsY0FBQTtFQUNBLGNBQUE7QUFWUjtBQWFJO0VBQ0kseUJBQUE7QUFYUiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvbWFpbi1jb2xvci1zZWxlY3Rpb24vbWFpbi1jb2xvci1zZWxlY3Rpb24uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY29sb3ItcGFsZXR0ZXtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIGJhY2tncm91bmQ6IGNhZGV0Ymx1ZTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgcGFkZGluZzogNXB4IDVweCAxMHB4IDEwcHg7XHJcbiAgICBib3gtc2hhZG93OiByZ2JhKDYwLCA2NCwgNjcsIDAuMykgMHB4IDFweCAycHggMHB4LCByZ2JhKDYwLCA2NCwgNjcsIDAuMTUpIDBweCAycHggNnB4IDJweDtcclxuXHJcbiAgICBvdmVyZmxvdy14OiBhdXRvO1xyXG5cclxuICAgIC5zZWxlY3Rpb257XHJcbiAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICBnYXA6IDAuMmVtO1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0O1xyXG4gICAgICAgIHdpZHRoOiA2MCU7XHJcbiAgICAgICAgbWluLXdpZHRoOiA1MDBweDtcclxuICAgIH1cclxuXHJcbiAgICBpbnB1dFt0eXBlID0gXCJudW1iZXJcIl17XHJcbiAgICAgICAgd2lkdGg6IDk1JTtcclxuICAgICAgICBtYXJnaW4tdG9wOiAycHg7XHJcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2VlZWVlZTtcclxuICAgICAgICBvdXRsaW5lOiBub25lO1xyXG4gICAgfVxyXG5cclxuICAgIC5udW0tY29sb3JzLXNlbGVjdGlvbntcclxuICAgICAgICBmbGV4OiAxO1xyXG4gICAgICAgIG1heC13aWR0aDogMTI1cHg7XHJcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG4gICAgfVxyXG5cclxuICAgIC5jb2xvci1zZWxlY3Rpb257XHJcbiAgICAgICAgZmxleDogMTtcclxuICAgICAgICBtYXgtd2lkdGg6IDEwMHB4O1xyXG5cclxuICAgICAgICAuY29sb3Itc2VsZWN0aW9uLXBpY2tlcntcclxuICAgICAgICAgICAgaGVpZ2h0OiAxMHZoO1xyXG4gICAgICAgICAgICBtYXgtd2lkdGg6IDkyJTtcclxuICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogMnB4O1xyXG4gICAgICAgIH1cclxuICAgIFxyXG4gICAgICAgIC5jb2xvci1zZWxlY3Rpb24tdGV4dHtcclxuICAgICAgICAgICAgbWF4LXdpZHRoOiA5MiU7XHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgIC5iYWNrZ3JvdW5kLXNlbGVjdGlvbntcclxuICAgICAgICBmbGV4OiAxO1xyXG4gICAgICAgIG1heC13aWR0aDogMTAwcHg7XHJcbiAgICAgICAgbWFyZ2luOiAwIDE1cHg7XHJcblxyXG4gICAgICAgIC5iYWNrZ3JvdW5kLXNlbGVjdGlvbi1waWNrZXJ7XHJcbiAgICAgICAgICAgIGhlaWdodDogMTB2aDtcclxuICAgICAgICAgICAgbWF4LXdpZHRoOiA5MiU7XHJcbiAgICAgICAgICAgIG1hcmdpbi1ib3R0b206IDJweDtcclxuICAgICAgICB9XHJcbiAgICBcclxuICAgICAgICAuYmFja2dyb3VuZC1zZWxlY3Rpb24tdGV4dHtcclxuICAgICAgICAgICAgbWF4LXdpZHRoOiA5MiU7XHJcbiAgICAgICAgfVxyXG4gICAgfVxyXG5cclxuXHJcbiAgICAuYmFja2dyb3VuZC1zZWxlY3Rpb24tbGFiZWwsIC5jb2xvci1zZWxlY3Rpb24tbGFiZWwsIC5zZWxlY3Rpb24tbGFiZWx7XHJcbiAgICAgICAgZm9udC1mYW1pbHk6IEhlbHZldGljYTtcclxuICAgICAgICBjb2xvcjogI2VmZWZlZjtcclxuICAgICAgICBmb250LXNpemU6IDFlbTtcclxuICAgIH1cclxuXHJcbiAgICAuY29sb3Itc2VsZWN0aW9uLXBpY2tlciwgLmJhY2tncm91bmQtc2VsZWN0aW9uLXBpY2tlcntcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCAjZWVlZWVlO1xyXG4gICAgfVxyXG59Il19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](MainColorSelectionComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
