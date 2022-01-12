@@ -17,6 +17,7 @@ import { PieChartComponent } from './components/graphs/pie-chart/pie-chart.compo
 import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choropleth-map.component';
 import { StackedAreaChartComponent } from './components/graphs/stacked-area-chart/stacked-area-chart.component';
 import { TintsShadesComponent } from './components/graphs/tints-shades/tints-shades.component';
+import { TypographyComponent } from './components/graphs/typography/typography.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TintsShadesComponent } from './components/graphs/tints-shades/tints-sha
     PieChartComponent,
     ChoroplethMapComponent,
     StackedAreaChartComponent,
-    TintsShadesComponent
+    TintsShadesComponent,
+    TypographyComponent
   ],
   imports: [
     BrowserModule,

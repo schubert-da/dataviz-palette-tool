@@ -318,6 +318,104 @@ ColourServiceService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
 
 /***/ }),
 
+/***/ "Ix65":
+/*!**********************************************************************!*\
+  !*** ./src/app/components/graphs/typography/typography.component.ts ***!
+  \**********************************************************************/
+/*! exports provided: TypographyComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TypographyComponent", function() { return TypographyComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! d3 */ "iYt/");
+/* harmony import */ var src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/colour-service.service */ "FQbm");
+
+
+
+
+class TypographyComponent {
+    constructor(colorservice) {
+        this.colorservice = colorservice;
+        this.background = "#fff";
+        this.margin = 20;
+        this.width = 200;
+        this.height = 200;
+        this.palette_subscription = this.colorservice.paletteChanged$.subscribe(data => {
+            this.colors = data;
+            this.updateColors();
+            // this.drawChart();
+        });
+        this.background_subscription = this.colorservice.backgroundChanged$.subscribe(data => {
+            this.background = data;
+        });
+    }
+    ngOnInit() {
+        this.createSvg();
+        this.drawChart();
+        this.updateColors();
+    }
+    createSvg() {
+        this.svg = d3__WEBPACK_IMPORTED_MODULE_1__["select"]("figure#typography")
+            .append("div");
+    }
+    drawChart() {
+        var chart = this;
+        // Bars
+        this.svg.selectAll(".typo")
+            .data(this.colors)
+            .enter()
+            .append()
+            .html(d => {
+            let hsl_color = d3__WEBPACK_IMPORTED_MODULE_1__["hsl"](d);
+            var highlight_text_color = hsl_color.l > 0.9 ? "#666" : "#fff";
+            return `Some choose to highlight <b style="color: ${d}">like this</b>, 
+        while others <b style="background-color: ${d}; color: ${highlight_text_color}; padding: 1px 3px">prefer this</b><br>`;
+        })
+            .attr("class", "typo")
+            .style("font-size", "1.0em");
+    }
+    updateColors() {
+        this.svg.selectAll(".typo")
+            .data(this.colors)
+            .enter()
+            .append()
+            .html(d => {
+            let hsl_color = d3__WEBPACK_IMPORTED_MODULE_1__["hsl"](d);
+            var highlight_text_color = hsl_color.l > 0.9 ? "#666" : "#fff";
+            return `Some choose to highlight <b style="color: ${d}">like this</b>, 
+        while others <b style="background-color: ${d}; color: ${highlight_text_color}; padding: 1px 3px">prefer this</b><br>`;
+        })
+            .attr("class", "typo")
+            .style("font-size", "1.0em");
+    }
+}
+TypographyComponent.ɵfac = function TypographyComponent_Factory(t) { return new (t || TypographyComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__["ColourServiceService"])); };
+TypographyComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: TypographyComponent, selectors: [["app-typography"]], inputs: { colors: "colors" }, decls: 4, vars: 2, consts: [[1, "viz"], [1, "viz-header"], ["id", "typography"]], template: function TypographyComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Typography ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "figure", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("background", ctx.background);
+    } }, styles: ["#typography[_ngcontent-%COMP%] {\n  margin: 2%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9ncmFwaHMvdHlwb2dyYXBoeS90eXBvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksVUFBQTtBQUNKIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9ncmFwaHMvdHlwb2dyYXBoeS90eXBvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3R5cG9ncmFwaHl7XHJcbiAgICBtYXJnaW46IDIlO1xyXG59Il19 */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TypographyComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-typography',
+                templateUrl: './typography.component.html',
+                styleUrls: ['./typography.component.scss']
+            }]
+    }], function () { return [{ type: src_app_services_colour_service_service__WEBPACK_IMPORTED_MODULE_2__["ColourServiceService"] }]; }, { colors: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }] }); })();
+
+
+/***/ }),
+
 /***/ "Sy1n":
 /*!**********************************!*\
   !*** ./src/app/app.component.ts ***!
@@ -338,6 +436,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/graphs/choropleth-map/choropleth-map.component */ "Y3VV");
 /* harmony import */ var _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/graphs/stacked-area-chart/stacked-area-chart.component */ "YnzT");
 /* harmony import */ var _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/graphs/tints-shades/tints-shades.component */ "7iX/");
+/* harmony import */ var _components_graphs_typography_typography_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/graphs/typography/typography.component */ "Ix65");
+
 
 
 
@@ -356,7 +456,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 11, vars: 8, consts: [[1, "viz-container", 3, "colors"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 12, vars: 9, consts: [[1, "viz-container", 3, "colors"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-main-color-selection");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "br");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "main");
@@ -368,6 +468,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](8, "app-choropleth-map", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](9, "app-stacked-area-chart", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](10, "app-tints-shades", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "app-typography", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
@@ -386,7 +487,9 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
-    } }, directives: [_components_main_color_selection_main_color_selection_component__WEBPACK_IMPORTED_MODULE_1__["MainColorSelectionComponent"], _components_graphs_bar_chart_bar_chart_component__WEBPACK_IMPORTED_MODULE_2__["BarChartComponent"], _components_graphs_line_chart_line_chart_component__WEBPACK_IMPORTED_MODULE_3__["LineChartComponent"], _components_graphs_treemap_treemap_component__WEBPACK_IMPORTED_MODULE_4__["TreemapComponent"], _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_5__["ScatterPlotComponent"], _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_6__["PieChartComponent"], _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__["ChoroplethMapComponent"], _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_8__["StackedAreaChartComponent"], _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_9__["TintsShadesComponent"]], styles: ["main[_ngcontent-%COMP%] {\n  padding: 10px;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-gap: 1em;\n  margin-top: 9%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtFQUVBLGFBQUE7RUFDQSw0REFBQTtFQUNBLGFBQUE7RUFFQSxjQUFBO0FBREoiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJtYWlue1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuXHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgZ3JpZC1nYXA6IDFlbTtcclxuXHJcbiAgICBtYXJnaW4tdG9wOiA5JTtcclxufSJdfQ== */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("colors", ctx.default_palette);
+    } }, directives: [_components_main_color_selection_main_color_selection_component__WEBPACK_IMPORTED_MODULE_1__["MainColorSelectionComponent"], _components_graphs_bar_chart_bar_chart_component__WEBPACK_IMPORTED_MODULE_2__["BarChartComponent"], _components_graphs_line_chart_line_chart_component__WEBPACK_IMPORTED_MODULE_3__["LineChartComponent"], _components_graphs_treemap_treemap_component__WEBPACK_IMPORTED_MODULE_4__["TreemapComponent"], _components_graphs_scatter_plot_scatter_plot_component__WEBPACK_IMPORTED_MODULE_5__["ScatterPlotComponent"], _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_6__["PieChartComponent"], _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_7__["ChoroplethMapComponent"], _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_8__["StackedAreaChartComponent"], _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_9__["TintsShadesComponent"], _components_graphs_typography_typography_component__WEBPACK_IMPORTED_MODULE_10__["TypographyComponent"]], styles: ["main[_ngcontent-%COMP%] {\n  padding: 10px;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-gap: 1em;\n  margin-top: 9%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtFQUVBLGFBQUE7RUFDQSw0REFBQTtFQUNBLGFBQUE7RUFFQSxjQUFBO0FBREoiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJtYWlue1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuXHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgZ3JpZC1nYXA6IDFlbTtcclxuXHJcbiAgICBtYXJnaW4tdG9wOiA5JTtcclxufSJdfQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -684,6 +787,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/graphs/choropleth-map/choropleth-map.component */ "Y3VV");
 /* harmony import */ var _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/graphs/stacked-area-chart/stacked-area-chart.component */ "YnzT");
 /* harmony import */ var _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/graphs/tints-shades/tints-shades.component */ "7iX/");
+/* harmony import */ var _components_graphs_typography_typography_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/graphs/typography/typography.component */ "Ix65");
+
 
 
 
@@ -723,7 +828,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
         _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_14__["PieChartComponent"],
         _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__["ChoroplethMapComponent"],
         _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"],
-        _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"],
+        _components_graphs_typography_typography_component__WEBPACK_IMPORTED_MODULE_18__["TypographyComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
         ngx_color_picker__WEBPACK_IMPORTED_MODULE_5__["ColorPickerModule"]] }); })();
@@ -742,7 +848,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _components_graphs_pie_chart_pie_chart_component__WEBPACK_IMPORTED_MODULE_14__["PieChartComponent"],
                     _components_graphs_choropleth_map_choropleth_map_component__WEBPACK_IMPORTED_MODULE_15__["ChoroplethMapComponent"],
                     _components_graphs_stacked_area_chart_stacked_area_chart_component__WEBPACK_IMPORTED_MODULE_16__["StackedAreaChartComponent"],
-                    _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"]
+                    _components_graphs_tints_shades_tints_shades_component__WEBPACK_IMPORTED_MODULE_17__["TintsShadesComponent"],
+                    _components_graphs_typography_typography_component__WEBPACK_IMPORTED_MODULE_18__["TypographyComponent"]
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
