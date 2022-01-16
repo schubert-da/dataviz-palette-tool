@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { index } from 'd3';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { cpuUsage } from 'process';
+import { Subscription } from 'rxjs';
 import { ColourServiceService } from 'src/app/services/colour-service.service';
 
 @Component({
@@ -19,8 +21,6 @@ export class MainColorSelectionComponent implements OnInit {
   default_palette: string[] = ["#4F091D", "#DD4A48", "#F5EEDC", "#97BFB4"]
 
   constructor( private colourservice: ColourServiceService) { 
-    
-
   }
 
   ngOnInit(): void {
@@ -49,11 +49,26 @@ export class MainColorSelectionComponent implements OnInit {
 
     if( index == "background" ){
       this.background = color;
+      this.colorPickerChanged();
     }
     else{
       this.color_list[index] = color;
       this.colorPickerChanged();
     }
+  }
+
+  // Update colors when event is emitted from import colours component.
+  updateImportedColors(event){
+    this.color_list = Array.from(event);
+    
+    // Change the index list for the color pickers for the palette
+    this.list = event.slice(0, event.length - 1).map((_,i) => i);
+
+    // Update palette and background colors
+    this.color_list = event.slice(0, event.length - 1);
+    this.background = event[event.length-1];
+
+    this.colourservice.changePalette(event);
   }
 
 }

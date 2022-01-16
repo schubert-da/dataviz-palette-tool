@@ -18,6 +18,8 @@ import { ChoroplethMapComponent } from './components/graphs/choropleth-map/choro
 import { StackedAreaChartComponent } from './components/graphs/stacked-area-chart/stacked-area-chart.component';
 import { TintsShadesComponent } from './components/graphs/tints-shades/tints-shades.component';
 import { TypographyComponent } from './components/graphs/typography/typography.component';
+import { NgbAccordionModule, NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { ImportColorsComponent } from './components/import-colors/import-colors.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,17 @@ import { TypographyComponent } from './components/graphs/typography/typography.c
     ChoroplethMapComponent,
     StackedAreaChartComponent,
     TintsShadesComponent,
-    TypographyComponent
+    TypographyComponent,
+    ImportColorsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    NgbAccordionModule,
+    NgbPopoverModule,
+    NgbModule
   ],
   providers: [ColourServiceService],
   bootstrap: [AppComponent]

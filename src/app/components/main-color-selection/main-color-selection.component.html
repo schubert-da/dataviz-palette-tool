@@ -20,4 +20,6 @@
             <input type="text" [value]="background" (change)="colorChanged($event)" class="background-selection-text" data-index="background">
         </div>
     </div>
+    <br>
+    <app-import-colors [colors]="color_list" (colorImported)="updateImportedColors($event)"> </app-import-colors>
 </div>
