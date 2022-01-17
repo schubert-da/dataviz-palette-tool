@@ -25,7 +25,7 @@ export class ImportColorsComponent implements OnInit {
     color_input = color_input.replace("[", '')
     color_input = color_input.replace("]", '')
 
-    var find = '[#"\'\s]*'; // removing # so that colors with/ wo # are treated the same
+    var find = '[#"\'\\s]*'; // removing # so that colors with/ wo # are treated the same
     var re = new RegExp(find, 'g');
     color_input = color_input.replace(re, '');
 

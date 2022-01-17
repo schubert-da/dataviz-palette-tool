@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { index } from 'd3';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -7,6 +8,20 @@ import { ColourServiceService } from 'src/app/services/colour-service.service';
 
 @Component({
   selector: 'app-main-color-selection',
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({transform: 'translateX(100%)', opacity: 0, "overflow-y": "hidden"}),
+          animate('500ms', style({transform: 'translateX(100%)', opacity: 1, "overflow-y": "hidden"}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateX(0)', opacity: 1}),
+          animate('50ms', style({transform: 'translateX(100%)', opacity: 0}))
+        ])
+      ]
+    )
+  ],
   templateUrl: './main-color-selection.component.html',
   styleUrls: ['./main-color-selection.component.scss']
 })
@@ -17,6 +32,8 @@ export class MainColorSelectionComponent implements OnInit {
   list: number[] = [0,1,2,3,4];
   color_list: string[] = [];
   background: string = "#ffffff";
+
+  isCollapsed: boolean = false;
 
   default_palette: string[] = ["#4F091D", "#DD4A48", "#F5EEDC", "#97BFB4"]
 
