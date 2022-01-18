@@ -3,7 +3,7 @@
         <div class="num-colors-selection">
             <label for="num_colors" class="selection-label"> Number of colors</label> <br>
             <input type="number" [(value)]="num_colors" (change)="numColorsChange($event)" name="num_colors" />
-            <input type="button" class="import-btn" value="Import colours" (click)="isCollapsed = !isCollapsed">
+            <input type="button" class="import-btn btn btn-light" value="Import colors" (click)="isCollapsed = !isCollapsed">
         </div>
 
         <div *ngFor="let index of list; let i = index" class="color-selection">

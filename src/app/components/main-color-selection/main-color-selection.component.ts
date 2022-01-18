@@ -79,13 +79,15 @@ export class MainColorSelectionComponent implements OnInit {
     this.color_list = Array.from(event);
     
     // Change the index list for the color pickers for the palette
-    this.list = event.slice(0, event.length - 1).map((_,i) => i);
+    this.list = event.slice().map((_,i) => i);
 
     // Update palette and background colors
-    this.color_list = event.slice(0, event.length - 1);
-    this.background = event[event.length-1];
+    this.color_list = event.slice();
+    this.num_colors = this.color_list.length;
 
-    this.colourservice.changePalette(event);
+    this.colourservice.changePalette([...this.color_list, this.background]);
+
+    this.isCollapsed = false;
   }
 
 }

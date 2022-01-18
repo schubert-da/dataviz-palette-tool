@@ -11,9 +11,6 @@ export class ImportColorsComponent implements OnInit {
   @Input() colors: string[]; 
   @Output() colorImported = new EventEmitter<String[]>();
 
-  constructor( private colourservice: ColourServiceService) { 
-  }
-
   ngOnInit(): void {
   }
 
@@ -38,6 +35,10 @@ export class ImportColorsComponent implements OnInit {
     
     this.colorImported.emit(color_list);
 
+  }
+
+  cancel(){
+    this.colorImported.emit(this.colors);
   }
 
 }
