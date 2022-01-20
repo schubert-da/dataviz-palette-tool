@@ -689,7 +689,7 @@ var ChoroplethMapComponent = /** @class */ (function () {
             })
         ]).then(function (loadData) {
             var topo = loadData[0];
-            console.log(chart.colors);
+
             // Draw the map
             chart.svg.append("g")
                 .selectAll("path.choropleth_area")
@@ -1561,8 +1561,8 @@ var MainColorSelectionComponent = /** @class */ (function () {
     };
     MainColorSelectionComponent.prototype.colorChanged = function (event) {
         var color = event.target.value;
-        var index = event.target.dataset.index;
-        console.log("color " + index + " changed to " + color);
+        var index = event.target.dataset.index; 
+        
         if (index == "background") {
             this.background = color;
             this.colorPickerChanged();

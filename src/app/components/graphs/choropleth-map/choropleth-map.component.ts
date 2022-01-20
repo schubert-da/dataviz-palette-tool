@@ -77,8 +77,6 @@ export class ChoroplethMapComponent implements OnInit {
       })
     ]).then(function(loadData){
         let topo : any = loadData[0]
-
-        console.log(chart.colors)
     
         // Draw the map
       chart.svg.append("g")

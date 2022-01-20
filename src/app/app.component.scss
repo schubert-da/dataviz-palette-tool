@@ -1,9 +1,43 @@
-main{
+main {
     padding: 10px;
-
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 1em;
-
     margin-top: 9%;
+}
+
+footer {
+    border-top: 1px solid black;
+    padding: 10px;
+    font-size: 1em;
+
+    span{
+        color: #999;
+        font-size: 1.2em;
+        margin-right: 10px;
+        letter-spacing: -0.5px;
+
+        strong{
+            color: #5f9ea0;
+            font-weight: 600;
+        }
+    }
+    
+    .item.social > a {
+        font-size: 20px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 10%;
+        box-shadow: 0 0 0 1px rgba(95, 158, 160, 0.8);
+        margin: 0 3px;
+        color: rgb(95, 158, 160);
+        opacity: 0.75
+    }
+
+    .item.social > a:hover {
+        opacity: 0.9
+    }
 }

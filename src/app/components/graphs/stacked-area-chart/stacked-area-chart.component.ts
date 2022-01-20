@@ -110,7 +110,7 @@ export class StackedAreaChartComponent implements OnInit {
     this.svg.append("g")
       .call(d3.axisLeft(y));
     
-  for( let name of this.data.map(d => d.name)){
+  for( let name of [... new Set(this.data.map(d => d.name))]){ // loop over all unique name values in data
     
     let currentData = this.data.filter( d => d.name == name);
 
