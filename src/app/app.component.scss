@@ -1,9 +1,21 @@
+section#intro{
+    padding: 10px;
+    font-size: 1em;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-end;
+
+    .title-text{
+        font-size: 4em;
+    }
+}
+
 main {
     padding: 10px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 1em;
-    margin-top: 9%;
 }
 
 footer {
