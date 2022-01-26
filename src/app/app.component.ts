@@ -12,13 +12,13 @@ export class AppComponent {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
-     if (window.scrollY > window.innerHeight * ( 30 / 100)) {
+     if (window.scrollY > document.getElementById('intro').offsetHeight) {
 
       let main_selection = document.getElementById('main-selection');
       main_selection.style.position="fixed";
       main_selection.style.top = "0";
 
-      document.getElementById("main").style.marginTop="9%";
+      document.getElementById("main").style.marginTop="14%";
 
      } else {
       let main_selection = document.getElementById('main-selection');
