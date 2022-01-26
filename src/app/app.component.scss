@@ -2,14 +2,29 @@ section#intro{
     padding: 10px;
     font-size: 1em;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-end;
-
     .title-text{
-        font-size: 4em;
+        font-size: 3em;
+    }
+
+    .intro-para{
+        text-align: justify;
+        max-width: 66ch;  
     }
 }
+
+@media(min-width: 150ch){
+    section#intro{
+        display: grid;
+        grid-template-columns: 60ch 60ch;
+        column-gap: 2em;
+
+        .title-text{
+            font-size: 4em;
+        }
+    }
+}
+
+
 
 main {
     padding: 10px;
