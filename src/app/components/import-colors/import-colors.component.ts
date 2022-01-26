@@ -17,16 +17,30 @@ export class ImportColorsComponent implements OnInit {
   importColors(event): void { 
     let textbox = document.getElementById("import-color-list") as HTMLInputElement;
     let color_input = textbox.value;
-    
-    // replace operations to get a list of hex values
+    let color_list: string[];
+    let find;
+
+    // remove brackets if any
     color_input = color_input.replace("[", '')
     color_input = color_input.replace("]", '')
 
-    var find = '[#"\'\\s]*'; // removing # so that colors with/ wo # are treated the same
-    var re = new RegExp(find, 'g');
-    color_input = color_input.replace(re, '');
+    let is_comma_delimited = color_input.indexOf(",") !==-1;
 
-    let color_list = color_input.split(",")
+    // If there is at least one comma, we treat the color list as comma delimited
+    if(is_comma_delimited){
+      find = '[#"\'\\s]*';
+      let re = new RegExp(find, 'g');
+      color_input = color_input.replace(re, '');
+      color_list = color_input.split(",")
+    }
+
+    // when list is space delimited
+    else{ 
+      find = '[#"\'\]*';
+      let re = new RegExp(find, 'g');
+      color_input = color_input.replace(re, '');
+      color_list = color_input.split(" ")
+    }
 
     // Add the # again to get list of hex codes
     color_list = color_list.map(function (currentElement) {
