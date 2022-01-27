@@ -85,7 +85,11 @@ export class PieChartComponent implements OnInit {
     }
 
   private updateColors(): void{
+     // change axis colors based on background lightness
+     let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+
     this.svg.selectAll(".pie-slice")
-      .attr("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+      .attr("fill", (_,i) => { return this.colors[i % this.colors.length]; })
+      .attr("stroke", base_color);
   }
 }

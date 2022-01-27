@@ -66,23 +66,27 @@ export class ScatterPlotComponent implements OnInit {
   }
 
   private drawChart(): void {
-    var chart = this;
+    let chart = this;
 
     const x = d3.scaleLinear()
       .domain([0, 105])
       .range([ 0, chart.width ]);
 
-    this.svg.append("g")
+    let xaxis = this.svg.append("g")
       .attr("transform", `translate(0, ${chart.height})`)
       .call(d3.axisBottom(x));
+
+    xaxis.selectAll("path").attr("class","base-color")
 
     // Add Y axis
     const y = d3.scaleLinear()
     .domain([0, 105])
     .range([ chart.height, 0]);
 
-    this.svg.append("g")
+    let yaxis = this.svg.append("g")
     .call(d3.axisLeft(y));
+
+    yaxis.selectAll("path").attr("class","base-color")
 
     // Add dots
     this.svg.append('g')
@@ -100,8 +104,14 @@ export class ScatterPlotComponent implements OnInit {
   }
 
   private updateColors(): void{
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+
     this.svg.selectAll(".scatter_dot")
-      .style("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+      .style("fill", (_,i) => { return this.colors[i % this.colors.length]; })
+      .style("stroke", base_color);
+
+    // change axis colors based on background lightness
+    this.svg.selectAll(".base-color").style("stroke", base_color); 
   }
 
 }

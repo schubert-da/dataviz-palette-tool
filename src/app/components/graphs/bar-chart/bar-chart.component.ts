@@ -20,7 +20,6 @@ export class BarChartComponent implements OnInit {
       data => {
         this.colors = data;
         this.updateColors();
-        // this.drawChart();
       });
 
     this.background_subscription = this.colorservice.backgroundChanged$.subscribe(
@@ -30,13 +29,10 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.createSvg();
     this.drawChart();
     this.updateColors()
-
   }
-
 
   private data = [
     { "Label": "A", "Value": "5"  },
@@ -62,32 +58,41 @@ export class BarChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    var chart = this;
+    let chart = this;
     // Build the pie chart
-    var x = d3.scaleBand()
+    let x = d3.scaleBand()
       .range([this.margin, this.width - this.margin])
       .domain(this.data.map(function (d) { return d.Label; }))
       .padding(0.075);
 
-    this.svg.append("g")
+    let xaxis = this.svg.append("g")
       .attr("transform", "translate(0," + (this.height - this.margin) + ")")
       .call(d3.axisBottom(x))
-      .selectAll("text")
+
+    xaxis.selectAll("path").attr("class","base-color")
+    xaxis.selectAll("line").attr("class","base-color")
+
+    xaxis.selectAll("text")
+      .attr("class","base-color-text")
       .attr("transform", "translate(0,0) rotate(0)")
       .style("text-anchor", "middle");
 
-    var range = d3.extent(this.data.map( d => +d.Value) )
+    let range = d3.extent(this.data.map( d => +d.Value) )
 
-    var y = d3.scaleLinear()
+    let y = d3.scaleLinear()
       .domain([0, +range[1]])
       .range( [ this.height - this.margin, this.margin ] )
       .nice();
 
-    this.svg.append("g")
+    let yaxis = this.svg.append("g")
+      .attr("class","base-color")
       .attr("transform", "translate(" + this.margin + ",0)")
-      .call(d3.axisLeft(y).ticks(5));
+      .call(d3.axisLeft(y).ticks(5))
 
-      
+    yaxis.selectAll("path").attr("class","base-color")
+    yaxis.selectAll("line").attr("class","base-color")
+    yaxis.selectAll("text").attr("class","base-color-text")
+    
     // Bars
     this.svg.selectAll(".bars")
       .data(this.data)
@@ -95,7 +100,7 @@ export class BarChartComponent implements OnInit {
       .append("rect")
       .attr("class","bars")
       .attr("x", function (d) { return +x(d.Label); })
-      .attr("y", function (d) { return 0 + y(d.Value); })
+      .attr("y", function (d) { return +y(d.Value) - 2; })
       .attr("width", x.bandwidth())
       .attr("height", function (d) { return +chart.height - y(+d.Value) - chart.margin; })
       .attr("fill", "#69b3a2")
@@ -105,6 +110,13 @@ export class BarChartComponent implements OnInit {
   private updateColors(): void{
     this.svg.selectAll(".bars")
       .attr("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+
+    // change axis colors based on background lightness
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+  
+    this.svg.selectAll(".base-color").style("stroke", base_color); 
+    this.svg.selectAll(".base-color-text").style("fill",base_color).style("stroke", "none");
+    
   }
 
 }

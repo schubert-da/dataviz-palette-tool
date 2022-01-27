@@ -91,13 +91,19 @@ export class ChoroplethMapComponent implements OnInit {
           // set the color of each country
           .attr("fill", (d,i) => { return chart.colors[i % chart.colors.length]; })
           .attr("stroke", "#444")
-          .attr("stroke-width", 0.25)
+          .attr("stroke-width", 0.4)
     })
   }
 
   private updateColors(): void{
+    // change axis colors based on background lightness
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#eee" : "#222";
+    let base_thickness = d3.hsl(this.background).l < 0.25 ? 0.4 : 0.25;
+
     this.svg.selectAll(".choropleth_area")
-      .attr("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+      .attr("fill", (_,i) => { return this.colors[i % this.colors.length]; })
+      .attr("stroke", base_color)
+      .attr("stroke-width", base_thickness);
   }
 
 }

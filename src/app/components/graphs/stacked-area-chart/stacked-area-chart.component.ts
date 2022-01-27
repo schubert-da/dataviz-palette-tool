@@ -91,48 +91,57 @@ export class StackedAreaChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    var chart = this;
+    let chart = this;
 
 
     const x = d3.scaleTime()
     .domain(d3.extent(this.data, d => +d.year))
     .range([ 0, chart.width ]);
 
-    this.svg.append("g")
+    let xaxis = this.svg.append("g")
       .attr("transform", `translate(0,${chart.height})`)
       .call(d3.axisBottom(x));
+
+    xaxis.selectAll("path").attr("class","base-color")
       
-  // Add Y axis
-  const y = d3.scaleLinear()
-    .domain([0, d3.max(this.data, d => +d.Value)])
-    .range([ chart.height, 0 ]);
+    // Add Y axis
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(this.data, d => +d.Value)])
+      .range([ chart.height, 0 ]);
 
-    this.svg.append("g")
-      .call(d3.axisLeft(y));
+    let yaxis = this.svg.append("g")
+        .call(d3.axisLeft(y));
+  
+    yaxis.selectAll("path").attr("class","base-color")  
+
+    for( let name of [... new Set(this.data.map(d => d.name))]){ // loop over all unique name values in data
     
-  for( let name of [... new Set(this.data.map(d => d.name))]){ // loop over all unique name values in data
-    
-    let currentData = this.data.filter( d => d.name == name);
+      let currentData = this.data.filter( d => d.name == name);
 
-    // Add the area
-    this.svg.append("path")
-      .datum(currentData)
-      .attr("fill", "#cce5df")
-      .attr("class", "stacked-path")
-      .attr("stroke", "#eee")
-      .attr("stroke-width", 1.1)
-      .attr("d", d3.area()
-        .x(d => x(+d["year"])+1)
-        .y0(y(0)-1)
-        .y1(d => y(+d["Value"]))
-        )
+      // Add the area
+      this.svg.append("path")
+        .datum(currentData)
+        .attr("fill", "#cce5df")
+        .attr("class", "stacked-path")
+        .attr("stroke", "#eee")
+        .attr("stroke-width", 1.1)
+        .attr("d", d3.area()
+          .x(d => x(+d["year"])+1)
+          .y0(y(0)-1)
+          .y1(d => y(+d["Value"]))
+          )
 
-  } 
+    } 
   }
 
   private updateColors(): void{
     this.svg.selectAll(".stacked-path")
       .attr("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+
+    // change axis colors based on background lightness
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+  
+    this.svg.selectAll(".base-color").style("stroke", base_color); 
   }
 
 }

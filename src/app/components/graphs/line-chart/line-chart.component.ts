@@ -95,34 +95,42 @@ export class LineChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    var chart = this;
-    var range = d3.extent(this.data.map( d => +d.Value) )
+    let chart = this;
+    let range = d3.extent(this.data.map( d => +d.Value) )
 
-    // group the data: I want to draw one line per group
-  const sumstat = d3.group(this.data, d => { return d["Label"]}); // nest function allows to group the calculation per level of a factor
+    const sumstat = d3.group(this.data, d => { return d["Label"]}); 
 
-    var x = d3.scaleTime()
+    let x = d3.scaleTime()
     .domain(d3.extent(this.data, function(d) { return +d["date"]; }))
     .range([this.margin, this.width - this.margin])
       
-    this.svg.append("g")
+    let xaxis = this.svg.append("g")
       .attr("transform", "translate(0," + (this.height - this.margin) + ")")
       .call(d3.axisBottom(x).ticks(4))
-      .selectAll("text")
+
+    xaxis.selectAll("text")
       .attr("transform", "translate(0,0) rotate(0)")
+      .attr("class", "base-color-text")
       .style("text-anchor", "middle")
       .style("font-size", "9px");
 
-    var y = d3.scaleLinear()
+    xaxis.selectAll("line").attr("class","base-color")
+    xaxis.selectAll("path").attr("class","base-color")
+
+    let y = d3.scaleLinear()
       .domain([0, +range[1]])
       .range( [ this.height - this.margin, this.margin ] )
       .nice();
 
-    this.svg.append("g")
+    let yaxis = this.svg.append("g")
       .attr("transform", "translate(" + this.margin + ",0)")
       .call(d3.axisLeft(y).ticks(6));
 
-      this.svg.selectAll(".lines")
+    yaxis.selectAll("path").attr("class","base-color")
+    yaxis.selectAll("line").attr("class","base-color")
+    yaxis.selectAll("text").attr("class","base-color-text")
+
+    this.svg.selectAll(".lines")
       .data(sumstat)
       .join("path")
         .attr("class","lines")
@@ -140,7 +148,13 @@ export class LineChartComponent implements OnInit {
 
   private updateColors(): void{
     this.svg.selectAll(".lines")
-      .attr("stroke", (d,i) => { return this.colors[i % this.colors.length]; })
+      .attr("stroke", (_,i) => { return this.colors[i % this.colors.length]; })
+
+    // change axis colors based on background lightness
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+  
+    this.svg.selectAll(".base-color").style("stroke", base_color); 
+    this.svg.selectAll(".base-color-text").style("fill",base_color).style("stroke", "none");
   }
 
 }

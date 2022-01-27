@@ -63,7 +63,7 @@ export class TreemapComponent implements OnInit {
   
 
   private drawChart(): void {
-    var chart = this;
+    let chart = this;
     const root = d3.stratify()
     .id(function(d) { return d["name"]; })   // Name of the entity (column name is name in csv)
     .parentId(function(d) { return d["parent"]; })   // Name of the parent (column name is parent in csv)
@@ -105,8 +105,11 @@ export class TreemapComponent implements OnInit {
   }
 
   private updateColors(): void{
+    let base_color = d3.hsl(this.background).l < 0.25 ? "#dedede" : "#222";
+
     this.svg.selectAll(".treemap_rect")
-      .style("fill", (d,i) => { return this.colors[i % this.colors.length]; })
+      .style("fill", (_,i) => { return this.colors[i % this.colors.length]; })
+      .style("stroke",  base_color);
   }
 
 }
