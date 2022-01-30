@@ -26,8 +26,9 @@ section#intro{
 @media(min-width: 150ch){
     section#intro{
         display: grid;
-        grid-template-columns: 60ch 60ch;
-        column-gap: 2em;
+        grid-template-columns: 70ch 60ch;
+        column-gap: 1em;
+        align-items: flex-end;
 
         .title-text{
             font-size: 4em;

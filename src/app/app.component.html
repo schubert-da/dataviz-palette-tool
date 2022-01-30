@@ -1,12 +1,11 @@
 <section id="intro">
     <span class="title-text">DataViz Palettes</span> <br> 
     <p class="intro-para">
-        Ever fallen into the trap of picking out a color palette for your data visualization work only to realise later that your choice colours doesn't quite hit the mark on your graph.
-        This tool lets get a sense of what your palette would look like on a variety of charts, while also allowing you quickly make changes and see how they play out.
+        DataViz palette allows you to quickly see what your color palette would like on an actual graph. No longer spend ages on your color choices only to realise that they don't quite hit the mark once you've plugged in your data.
+        <br><br>
+        Experiment with different colors by importing palettes from your favourite color generator tools to see how they might play out on your future viz.
     </p> 
     <p class="intro-para">
-        You can also quickly import colors from your favourite color palette generators and experiment with what they would look like in your viz. 
-        <br>
         <label for="primary-color-picker">Site Color </label> <br>
         <input [(colorPicker)]="main_color" [style.background]="main_color" class="primary-color-picker" (colorPickerChange)="colorPickerChanged($event)" id="primary-color-picker"/>
     </p> 
