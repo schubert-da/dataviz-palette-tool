@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="import-color-list" class="form-text">Enter  a list of hex values </label>
-    <input type="text" class="form-control" placeholder="eg #fffcf2, #ccc5b9, #403d39, ... #eb5e28" id="import-color-list" name="import-color-list">
+    <input type="text" class="form-control" [placeholder]="colors" [value]="colors" id="import-color-list" name="import-color-list">
     <small id="emailHelp" class="form-text">Most palette tools have an option to export a similar format. Note that the '#' is optional</small>
 
     <button class="btn btn-secondary confirm" (click)="importColors($event)">Import</button>

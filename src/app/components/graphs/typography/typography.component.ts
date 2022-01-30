@@ -82,7 +82,10 @@ export class TypographyComponent implements OnInit {
         var highlight_text_color = hsl_color.l > 0.9? "#666" : "#fff"; // adjust color of highlighted text based on highlight bg
 
         return `<span style="color: ${base_font_color}">Some choose to highlight <b style="color: ${d}">like this</b>, 
-        while others <b style="background-color: ${d}; color: ${highlight_text_color}; padding: 1px 3px">prefer this</b></span><br>`
+        while others <b style="background-color: ${d}; color: ${highlight_text_color}; padding: 1px 3px">prefer this</b></span><br>
+        <p style='color: ${d}'>
+        <span style='font-weight:100'>When the font</span> <span style='font-weight:400'>weights are getting</span> <span style='font-weight:600'> increasingly bolder </span> <span style='font-weight:bolder'> in said color. </span>
+        </p>`
       }
         )
       .attr("class","typo")

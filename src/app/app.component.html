@@ -6,8 +6,11 @@
     </p> 
     <p class="intro-para">
         You can also quickly import colors from your favourite color palette generators and experiment with what they would look like in your viz. 
+        <br>
+        <label for="primary-color-picker">Site Color </label> <br>
+        <input [(colorPicker)]="main_color" [style.background]="main_color" class="primary-color-picker" (colorPickerChange)="colorPickerChanged($event)" id="primary-color-picker"/>
     </p> 
-</section>
+    </section>
 
 <app-main-color-selection></app-main-color-selection>
 <br>

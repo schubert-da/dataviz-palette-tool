@@ -10,6 +10,17 @@ section#intro{
         text-align: justify;
         max-width: 66ch;  
     }
+
+    label{
+        font-weight: 500;
+        margin-top: 0.5em;
+        margin-bottom: 3px;
+    }
+
+    .primary-color-picker{
+        width: 80px;
+        height: 80px;
+    }
 }
 
 @media(min-width: 150ch){
