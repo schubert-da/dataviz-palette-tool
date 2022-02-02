@@ -1,9 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { index } from 'd3';
-import { ColorPickerModule } from 'ngx-color-picker';
-import { cpuUsage } from 'process';
-import { Subscription } from 'rxjs';
 import { ColourServiceService } from 'src/app/services/colour-service.service';
 
 @Component({
@@ -31,7 +27,7 @@ export class MainColorSelectionComponent implements OnInit {
   num_colors: number = 4;
   list: number[] = [0,1,2,3,4];
   color_list: string[] = [];
-  background: string = "#ffffff";
+  background: string = "#efefef";
 
   isCollapsed: boolean = false;
 
@@ -53,7 +49,7 @@ export class MainColorSelectionComponent implements OnInit {
     this.list = Array.from({ length: event.target.value }, (_, i) => i).slice()
 
     this.color_list = Array.from({ length: event.target.value }, (_, i) => this.color_list[i]);
-    this.color_list = this.color_list.map(color => color === undefined ? "#ffffff" : color);
+    this.color_list = this.color_list.map(color => color === undefined ? this.color_list[this.color_list.length-2] : color);
 
     this.colourservice.changePalette([...this.color_list, this.background]);
   }

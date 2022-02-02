@@ -11,6 +11,7 @@ export class AppComponent {
 
   default_palette: string[] = ["#4F091D", "#DD4A48", "#f7f3e8", "#97BFB4"];
 
+  // Allow sticky positioning for main color selection
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
      if (window.scrollY > document.getElementById('intro').offsetHeight) {
@@ -29,6 +30,7 @@ export class AppComponent {
      }
   }
 
+  // Handle change for main site color
   colorPickerChanged(event){
     let color:string = event;
 

@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ColourServiceService } from 'src/app/services/colour-service.service';
 
 @Component({
   selector: 'app-import-colors',

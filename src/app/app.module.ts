@@ -7,9 +7,7 @@ import { AppComponent } from './app.component';
 import { MainColorSelectionComponent } from './components/main-color-selection/main-color-selection.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TestComponentComponent } from './components/test-component/test-component.component';
 import { ColourServiceService } from './services/colour-service.service';
-import { VizContainerComponent } from './components/viz-container/viz-container.component';
 import { BarChartComponent } from './components/graphs/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/graphs/line-chart/line-chart.component';
 import { TreemapComponent } from './components/graphs/treemap/treemap.component';
@@ -26,8 +24,6 @@ import { ImportColorsComponent } from './components/import-colors/import-colors.
   declarations: [
     AppComponent,
     MainColorSelectionComponent,
-    TestComponentComponent,
-    VizContainerComponent,
     BarChartComponent,
     LineChartComponent,
     TreemapComponent,
